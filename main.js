@@ -3,8 +3,8 @@ const path = require('path');
 
 const createWindow = () => {
   const win = new BrowserWindow({
-    width: 1100,
-    height: 720,
+    width: 1200,
+    height: 760,
     backgroundColor: '#0b0b0b',
     webPreferences: {
       contextIsolation: true,
@@ -56,4 +56,12 @@ ipcMain.handle('autostart:get', () => {
 ipcMain.handle('autostart:set', (_event, enabled) => {
   setAutoLaunch(Boolean(enabled));
   return app.getLoginItemSettings().openAtLogin;
+});
+
+ipcMain.handle('external:open', (_event, url) => {
+  if (typeof url === 'string' && url.startsWith('https://')) {
+    shell.openExternal(url);
+    return true;
+  }
+  return false;
 });
