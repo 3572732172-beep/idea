@@ -1,0 +1,31 @@
+{
+  "name": "idea-pomodoro-planner",
+  "version": "1.0.0",
+  "description": "Minimal black-and-white daily planner with Pomodoro timer and quick links.",
+  "main": "main.js",
+  "author": "",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "build:win": "electron-builder --win --x64"
+  },
+  "devDependencies": {
+    "electron": "^30.0.0",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId": "com.idea.pomodoro",
+    "productName": "IdeaPlanner",
+    "files": [
+      "main.js",
+      "preload.js",
+      "index.html",
+      "styles.css",
+      "renderer.js"
+    ],
+    "win": {
+      "target": "nsis",
+      "artifactName": "${productName}-Setup-${version}.${ext}"
+    }
+  }
+}
