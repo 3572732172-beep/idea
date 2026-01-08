@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Idea Planner</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="top-bar">
+        <div>
+          <h1>Idea Planner</h1>
+          <p class="subtitle">极简黑白 · 番茄时钟 · 每日规划</p>
+        </div>
+        <div class="top-actions">
+          <button id="theme-toggle" class="ghost">切换日/夜</button>
+          <div class="autostart">
+            <label class="switch">
+              <input id="autostart-toggle" type="checkbox" />
+              <span class="slider"></span>
+            </label>
+            <span>开机自启动</span>
+          </div>
+        </div>
+      </header>
+
+      <nav class="tabs">
+        <button class="tab active" data-tab="focus">专注时钟</button>
+        <button class="tab" data-tab="planner">每日规划</button>
+        <button class="tab" data-tab="links">对话入口</button>
+      </nav>
+
+      <main class="layout">
+        <section class="card" data-panel="focus">
+          <div class="panel-header">
+            <h2>番茄时钟</h2>
+            <p class="section-subtitle">拖动滑块快速调整时长，记录专注与休息。</p>
+          </div>
+          <div class="timer-display">
+            <span id="timer-label">专注中</span>
+            <div class="time" id="timer-time">25:00</div>
+            <div class="progress">
+              <div id="progress-bar" class="progress-bar"></div>
+            </div>
+          </div>
+          <div class="timer-controls">
+            <button id="start-timer" class="primary">开始</button>
+            <button id="pause-timer" class="ghost">暂停</button>
+            <button id="reset-timer" class="ghost">重置</button>
+          </div>
+          <div class="timer-settings">
+            <label>
+              专注时间 (分钟)
+              <div class="range-row">
+                <input id="focus-length" type="range" min="10" max="90" value="25" />
+                <input id="focus-length-input" type="number" min="10" max="90" value="25" />
+              </div>
+              <span id="focus-length-value" class="range-value">25</span>
+            </label>
+            <label>
+              休息时间 (分钟)
+              <div class="range-row">
+                <input id="break-length" type="range" min="3" max="30" value="5" />
+                <input id="break-length-input" type="number" min="3" max="30" value="5" />
+              </div>
+              <span id="break-length-value" class="range-value">5</span>
+            </label>
+          </div>
+          <div class="note-row">
+            <input id="timer-note" type="text" placeholder="本次专注备注..." />
+            <button id="log-session" class="ghost">记录</button>
+          </div>
+          <div class="timeline">
+            <h3>专注流程图</h3>
+            <div id="timer-timeline" class="timeline-list"></div>
+          </div>
+        </section>
+
+        <section class="card" data-panel="planner" hidden>
+          <div class="panel-header">
+            <h2>每日规划</h2>
+            <p class="section-subtitle">新页面记录每日计划，形成长期线性流程图。</p>
+          </div>
+          <div class="planner-form">
+            <input id="plan-title" type="text" placeholder="今日计划标题" />
+            <textarea id="planner-text" placeholder="写下今日目标、重点任务与安排..."></textarea>
+            <input id="plan-note" type="text" placeholder="计划备注（可选）" />
+            <button id="save-plan" class="primary">保存计划</button>
+          </div>
+          <div class="timeline">
+            <h3>每日规划流程图</h3>
+            <div id="plan-timeline" class="timeline-list"></div>
+          </div>
+          <div class="task-panel">
+            <h3>今日清单</h3>
+            <div class="task-input">
+              <input id="task-input" type="text" placeholder="新增任务..." />
+              <input id="task-note" type="text" placeholder="小备注..." />
+              <button id="add-task" class="ghost">添加</button>
+            </div>
+            <ul id="task-list" class="task-list"></ul>
+          </div>
+        </section>
+
+        <section class="card" data-panel="links" hidden>
+          <h2>快速对话入口</h2>
+          <p class="section-subtitle">一键打开与 ChatGPT / Gemini 的对话。</p>
+          <div class="link-grid">
+            <button class="link-card" data-url="https://chat.openai.com">
+              <span>ChatGPT</span>
+              <span class="link-hint">openai.com</span>
+            </button>
+            <button class="link-card" data-url="https://gemini.google.com">
+              <span>Gemini</span>
+              <span class="link-hint">google.com</span>
+            </button>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div id="detail-modal" class="modal" hidden>
+      <div class="modal-content">
+        <button id="close-modal" class="ghost close">关闭</button>
+        <h3 id="modal-title"></h3>
+        <p id="modal-date" class="hint"></p>
+        <p id="modal-body"></p>
+        <p id="modal-note" class="hint"></p>
+      </div>
+    </div>
+
+    <script src="renderer.js"></script>
+  </body>
+</html>
