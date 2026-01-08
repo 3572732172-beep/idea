@@ -17,6 +17,8 @@ const pauseButton = document.getElementById('pause-timer');
 const resetButton = document.getElementById('reset-timer');
 const focusLengthInput = document.getElementById('focus-length');
 const breakLengthInput = document.getElementById('break-length');
+const focusLengthNumber = document.getElementById('focus-length-input');
+const breakLengthNumber = document.getElementById('break-length-input');
 const focusLengthValue = document.getElementById('focus-length-value');
 const breakLengthValue = document.getElementById('break-length-value');
 const timerNoteInput = document.getElementById('timer-note');
@@ -122,9 +124,33 @@ const resetTimer = () => {
   updateTimerUI();
 };
 
+const clampValue = (value, min, max) => Math.min(Math.max(value, min), max);
+
 const updateRangeValues = () => {
   focusLengthValue.textContent = focusLengthInput.value;
   breakLengthValue.textContent = breakLengthInput.value;
+  focusLengthNumber.value = focusLengthInput.value;
+  breakLengthNumber.value = breakLengthInput.value;
+};
+
+const syncFocusFromNumber = () => {
+  const next = clampValue(Number(focusLengthNumber.value || 0), 10, 90);
+  focusLengthInput.value = String(next);
+  focusLengthNumber.value = String(next);
+  updateRangeValues();
+  if (isFocus) {
+    resetTimer();
+  }
+};
+
+const syncBreakFromNumber = () => {
+  const next = clampValue(Number(breakLengthNumber.value || 0), 3, 30);
+  breakLengthInput.value = String(next);
+  breakLengthNumber.value = String(next);
+  updateRangeValues();
+  if (!isFocus) {
+    resetTimer();
+  }
 };
 
 const openModal = ({ title, date, body, note }) => {
@@ -296,6 +322,9 @@ breakLengthInput.addEventListener('input', () => {
     resetTimer();
   }
 });
+
+focusLengthNumber.addEventListener('input', syncFocusFromNumber);
+breakLengthNumber.addEventListener('input', syncBreakFromNumber);
 
 logSessionButton.addEventListener('click', addTimerSession);
 

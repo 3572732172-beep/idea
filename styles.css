@@ -216,8 +216,24 @@ button:active {
   color: var(--muted);
 }
 
+.range-row {
+  display: grid;
+  grid-template-columns: 1fr 80px;
+  gap: 12px;
+  align-items: center;
+}
+
 input[type='range'] {
   accent-color: var(--accent);
+}
+
+input[type='number'] {
+  width: 80px;
+  padding: 8px 10px;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text);
 }
 
 .range-value {
@@ -396,6 +412,10 @@ input[type='range'] {
   align-items: center;
   justify-content: center;
   padding: 20px;
+}
+
+.modal[hidden] {
+  display: none;
 }
 
 .modal-content {
